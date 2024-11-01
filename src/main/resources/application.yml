@@ -1,0 +1,16 @@
+server:
+  port: 8082
+jwt:
+  secret: qwertyuiopokjhgfds
+spring:
+  freemarker:
+    cache: false
+    enabled: true
+    settings:
+      template_update_delay: 0
+      api_builtin_enabled: true
+    suffix: .ftl
+    template-loader-path: classpath:/template/
+    encoding: UTF-8
+    new-builtin-class-resolver: safer
+    expose-spring-macro-helpers: true

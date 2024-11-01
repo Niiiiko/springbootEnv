@@ -37,7 +37,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         String id;
 
-                id = JWT.decode(token).getAudience().get(0);
+        id = JWT.decode(token).getAudience().get(0);
         User user;
         user = userService.findUser(id);
         if (user == null){
@@ -46,15 +46,15 @@ public class AuthInterceptor implements HandlerInterceptor {
             response.getWriter().write("{\"error\":\"Unauthorized access. Please login.\"}"); // 自定义返回内容
             return false; // 拦截请求，防止继续处理
         }
-//        JWTVerifier jwtVerifier = JWT.require(Algorithm.none()).build();
-//        try{
-//            jwtVerifier.verify(token);
-//        }catch (Exception e){
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 设置401未授权状态码
-//            response.setContentType("application/json;charset=UTF-8"); // 设置返回类型为 JSON
-//            response.getWriter().write("{\"error\":\"Unauthorized access. Please login.\"}"); // 自定义返回内容
-//            return false; // 拦截请求，防止继续处理
-//        }
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
+        try{
+            jwtVerifier.verify(token);
+        }catch (Exception e){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 设置401未授权状态码
+            response.setContentType("application/json;charset=UTF-8"); // 设置返回类型为 JSON
+            response.getWriter().write("{\"error\":\"Unauthorized access. Please login.\"}"); // 自定义返回内容
+            return false; // 拦截请求，防止继续处理
+        }
         return true;
     }
 
